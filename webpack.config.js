@@ -9,13 +9,10 @@ const isDev = !isProd
 
 const filename = ext => isProd ? `bundle.${ext}` : `bundle.[hash].${ext}`
 
-console.log('IS PROD:', isProd)
-console.log('IS DEV:', isDev)
-
 module.exports = {
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
-    entry: './index.js',
+    entry: ['@babel/polyfill', './index.js'],
     output: {
         filename: filename('js'),
         path: path.resolve(__dirname, 'dist')
@@ -26,6 +23,11 @@ module.exports = {
             '@': path.resolve(__dirname, 'src'),
             '@core': path.resolve(__dirname, 'src/core')
         }
+    },
+    devtool: isDev ? 'source-map' : false,
+    devServer: {
+        port: 3000,
+        hot: isDev
     },
     plugins: [
         new CleanWebpackPlugin(),
