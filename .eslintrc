@@ -5,12 +5,13 @@
     "browser": true,
     "node": true
   },
+  "extends": ["eslint:recommended", "google"],
   "rules": {
     "semi": "off",
     "arrow-parents": "off",
     "comma-dangle": "off",
-    "require-jsdoc": "off"
-
-  },
-  "extends": ["eslint:recommended", "google"]
+    "require-jsdoc": "off",
+    "operator-linebreak": "off"
+  }
 }
+
