@@ -13,13 +13,13 @@ function toColumn(el) {
   return `
     <div class="column">  
       ${el}
-      <div class="col-resize"></div>
+      <div class="col-resize" data-resize="col"></div>
     </div>
   `
 }
 
 function createRow(index, content) {
-  const resize = index ? '<div class="row-resize"></div>' : ''
+  const resize = index ? '<div class="row-resize" data-resize="row"></div>' : ''
   return `
     <div class="row">
       <div class="row-info">
@@ -46,8 +46,6 @@ export function createTable(rowsCount = 15) {
     .map(toChar) // замена значения на букву от A до Z
     .map(toColumn) //.map(el => toColumn(el) // передача элементов для колонок
     .join('') // преобразование к строке
-
-
 
   rows.push(createRow(null, cols))
 
