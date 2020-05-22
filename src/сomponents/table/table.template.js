@@ -1,23 +1,31 @@
-
 const CODES = {
   A: 65,
   Z: 90
 }
 
-function toSell() {
+function toСell() {
   return `
     <div class="cell" contenteditable></div>
   `
 }
 
 function toColumn(el) {
-  return `<div class="column">${el}</div>`
+  return `
+    <div class="column">  
+      ${el}
+      <div class="col-resize"></div>
+    </div>
+  `
 }
 
 function createRow(index, content) {
+  const resize = index ? '<div class="row-resize"></div>' : ''
   return `
     <div class="row">
-      <div class="row-info">${index ? index : ''}</div>
+      <div class="row-info">
+        ${index ? index : ''}
+        ${resize}
+       </div>
       <div class="row-data">${content}</div>
     </div> 
   `
@@ -46,7 +54,7 @@ export function createTable(rowsCount = 15) {
   for(let i = 0; i < rowsCount; i++) {
     const cells = new Array(colsCount)
       .fill('')
-      .map(toSell)
+      .map(toСell)
       .join('')
     rows.push(createRow(i + 1, cells))
   }
