@@ -3,16 +3,16 @@ const CODES = {
   Z: 90
 }
 
-function toСell() {
+function toСell(_, col) {
   return `
-    <div class="cell" contenteditable></div>
+    <div class="cell" contenteditable data-col="${col}"></div>
   `
 }
 
-function toColumn(el) {
+function toColumn(col, index) {
   return `
-    <div class="column">  
-      ${el}
+    <div class="column" data-type="resizable" data-col="${index}">  
+      ${col}
       <div class="col-resize" data-resize="col"></div>
     </div>
   `
@@ -21,7 +21,7 @@ function toColumn(el) {
 function createRow(index, content) {
   const resize = index ? '<div class="row-resize" data-resize="row"></div>' : ''
   return `
-    <div class="row">
+    <div class="row" data-type="resizable">
       <div class="row-info">
         ${index ? index : ''}
         ${resize}
@@ -40,12 +40,11 @@ export function createTable(rowsCount = 15) {
   const colsCount = CODES.Z - CODES.A + 1
   const rows = []
 
-  // строка из букв A - Z
   const cols = new Array(colsCount)
-    .fill('') // заполнение ячеек пустой строкой
-    .map(toChar) // замена значения на букву от A до Z
-    .map(toColumn) //.map(el => toColumn(el) // передача элементов для колонок
-    .join('') // преобразование к строке
+    .fill('')
+    .map(toChar)
+    .map(toColumn)
+    .join('')
 
   rows.push(createRow(null, cols))
 
