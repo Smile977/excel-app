@@ -11,7 +11,7 @@ export class Table extends ExcelComponent {
   constructor($root, options) {
     super($root, {
       name: 'Table',
-      listeners: ['mousedown', 'keydown'],
+      listeners: ['mousedown', 'keydown', 'input'],
       ...options
     })
   }
@@ -27,36 +27,31 @@ export class Table extends ExcelComponent {
   init() {
     super.init()
 
-    const $cell = this.$root.find('[data-id="0:0"]')
-    this.selection.select($cell)
+    // Первая ячейка
+    this.selectCell(this.$root.find('[data-id="0:0"]'))
 
-    this.emitter.subscribe('it is working', text => {
+    // подписываемся на событие
+    this.$on('formula:input', text => {
       this.selection.current.text(text)
-      console.log('Table from Formula:', text)
+    })
+
+    // по клику Enter смена фокуса на текущую ячейку
+    this.$on('formula:done', () => {
+      this.selection.current.focus()
     })
   }
 
-  // onMousedown(event) {
-  //   if (shouldResize(event)) { // resize cols and rows
-  //     resizeHandler(this.$root, event)
-  //   } else if (isCell(event)) {
-  //     const $target = $(event.target)
-  //     if (event.shiftKey) { // select group cells
-  //       const $cells = matrix($target, this.selection.current)
-  //         .map(id => this.$root.find(`[data-id="${id}"]`))
-  //       this.selection.selectGroup($cells)
-  //     } else { // select one cell
-  //       this.selection.select($target)
-  //     }
-  //   }
-  // }
+  selectCell($cell) {
+    this.selection.select($cell)
+    this.$emit('table:select', $cell)
+  }
 
   onMousedown(event) {
-    if (shouldResize(event)) {
+    if (shouldResize(event)) { // resize cols and rows
       resizeHandler(this.$root, event)
     } else if (isCell(event)) {
       const $target = $(event.target)
-      if (event.shiftKey) {
+      if (event.shiftKey) { // select group cells
         const $cells = matrix($target, this.selection.current)
           .map(id => this.$root.find(`[data-id="${id}"]`))
         this.selection.selectGroup($cells)
@@ -82,8 +77,12 @@ export class Table extends ExcelComponent {
       event.preventDefault()
       const id = this.selection.current.id(true)
       const $next = this.$root.find(nextSelector(key, id))
-      this.selection.select($next)
+      this.selectCell($next)
     }
+  }
+
+  onInput(event) {
+    this.$emit('table:input', $(event.target))
   }
 }
 
