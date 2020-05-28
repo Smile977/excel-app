@@ -79,6 +79,13 @@ class Dom {
         })
   }
 
+  getStyles(styles = []) {
+    return styles.reduce((res, s) => {
+      res[s] = this.$el.style[s]
+      return res
+    }, {})
+  }
+
   id(parse) {
     if (parse) {
       const parsed = this.id().split(':')
@@ -110,7 +117,6 @@ export function $(selector) {
   return new Dom(selector)
 }
 
-// create element dom-node(tagName, add class)
 $.create = (tagName, classes = '') => {
   const el = document.createElement(tagName)
   if (classes) {
