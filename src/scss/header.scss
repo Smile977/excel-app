@@ -3,6 +3,7 @@
 
 .excel__header {
   position: absolute;
+  top: 0;
   right: 0;
   left: 0;
   height: $header-height;
@@ -12,7 +13,7 @@
 
   & .input {
     margin: 0;
-    padding: 2px 7px ;
+    padding: 2px 7px;
     min-width: 1px;
     color: #000;
     border: 1px solid transparent;
@@ -34,4 +35,5 @@
   .button {
     @include button(red);
   }
+
 }
