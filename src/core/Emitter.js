@@ -3,8 +3,9 @@ export class Emitter {
     this.listeners = {}
   }
 
-  // Уведомляем слушателей если они есть
-  // table.emit('table:select', {a:1})
+  // dispatch, fire, trigger
+  // Уведомляем слушателе если они есть
+  // table.emit('table:select', {a: 1})
   emit(event, ...args) {
     if (!Array.isArray(this.listeners[event])) {
       return false
@@ -15,27 +16,28 @@ export class Emitter {
     return true
   }
 
-  // подписываемся на уведомления
-  // добвыляем нового слушателя
-  // formula.subscribe('table-select', () => {})
+  // on, listen
+  // Подписываемся на уведомление
+  // Добавляем нового слушателя
+  // formula.subscribe('table:select', () => {})
   subscribe(event, fn) {
     this.listeners[event] = this.listeners[event] || []
     this.listeners[event].push(fn)
     return () => {
-      this.listeners[event] = this.listeners[event].filter(listener => listener !== fn)
+      this.listeners[event] =
+        this.listeners[event].filter(listener => listener !== fn)
     }
   }
 }
 
-
 // Example
 // const emitter = new Emitter()
-// const unsub = emit.subscribe('Andrey', data => console.log('Sub:', data))
 //
-// emit.emit('Andrey', 42)
+// const unsub = emitter.subscribe('vladilen', data => console.log(data))
+// emitter.emit('1231231', 42)
 //
 // setTimeout(() => {
-//   emitter.emit('Andrey', 'After 2 second')
+//   emitter.emit('vladilen', 'After 2 seconds')
 // }, 2000)
 //
 // setTimeout(() => {
@@ -43,5 +45,5 @@ export class Emitter {
 // }, 3000)
 //
 // setTimeout(() => {
-//   emitter.emit('Andrey', 'After 4 second')
+//   emitter.emit('vladilen', 'After 4 seconds')
 // }, 4000)
