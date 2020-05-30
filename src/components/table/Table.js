@@ -34,8 +34,8 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:input', value => {
       this.selection.current
-        .attr('data-value', value)
-        .text(parse(value))
+          .attr('data-value', value)
+          .text(parse(value))
       this.updateTextInStore(value)
     })
 
