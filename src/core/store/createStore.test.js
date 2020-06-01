@@ -11,7 +11,7 @@ const reducer = (state = initialState, action) => {
   return state
 }
 
-describe('CreateStore:', () => {
+describe('createStore:', () => {
   let store
   let handler
 
@@ -47,6 +47,7 @@ describe('CreateStore:', () => {
 
   test('should call subscriber function', () => {
     store.subscribe(handler)
+
     store.dispatch({type: 'ADD'})
 
     expect(handler).toHaveBeenCalled()
@@ -76,4 +77,3 @@ describe('CreateStore:', () => {
     })
   })
 })
-
