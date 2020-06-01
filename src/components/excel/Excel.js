@@ -2,7 +2,7 @@ import {$} from '@core/dom'
 import {Emitter} from '@core/Emitter'
 import {StoreSubscriber} from '@core/StoreSubscriber'
 import {updateDate} from '@/redux/actions'
-import {preventDefault} from "@core/utils";
+import {preventDefault} from '@core/utils'
 
 export class Excel {
   constructor(options) {
@@ -43,6 +43,6 @@ export class Excel {
   destroy() {
     this.subscriber.unsubscribeFromStore()
     this.components.forEach(component => component.destroy())
-    document.addEventListener('contextmenu', preventDefault)
+    document.removeEventListener('contextmenu', preventDefault)
   }
 }
